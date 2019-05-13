@@ -63,4 +63,16 @@ function customFormat(options) {
     return logs;
 };
 
-module.exports = logger;
+function processErrorMetadata(loggerContext, err) {
+    return {
+        ...loggerContext,
+        metadata: {
+            ...loggerContext.metadata,
+            internalErrorInfo: {
+                errorReason: err.stack || err.message
+            }
+        }
+    }
+}
+
+module.exports = { logger, processErrorMetadata };
