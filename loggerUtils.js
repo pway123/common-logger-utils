@@ -1,6 +1,6 @@
 const winston = require('winston');
 
-const logger = new winston.Logger({
+const loggerUtils = new winston.Logger({
     transports: [
         new winston.transports.Console({
             timestamp: tsFormat,
@@ -48,31 +48,21 @@ function customFormat(options) {
 
     // let msgObj = options.message ? JSON.parse(options.message) : '';
     let meta = options.meta;
-    let logs = `[${timestamp}] [${logLevel}]`;
+    let logs = `[${timestamp}] [${logLevel}] [${meta.trxType}] [${meta.trxResult}] [${meta.trxId}] [${calculateTransactionDuration(meta.startTime)}]`;
 
     for (var property in meta) {
-        if (meta.hasOwnProperty(property)) {
-            if (property === 'startTime') {
-                meta[property] = calculateTransactionDuration(meta[property]);
-            }
+        if (property === 'others') {
+            let valueInOthers = meta[property];
 
-            logs += typeof meta[property] === 'object' ? ` [${property} : ${JSON.stringify(meta[property])}]` : ` [${meta[property]}]`;
+            for (var key in valueInOthers) {
+                if (valueInOthers.hasOwnProperty(key)) {
+                    logs += typeof valueInOthers[key] === 'object' ? ` [${key} : ${JSON.stringify(valueInOthers[key])}]` : ` [${valueInOthers[key]}]`;
+                }
+            }
         }
     }
 
     return logs;
 };
 
-function processErrorMetadata(loggerContext, err) {
-    return {
-        ...loggerContext,
-        metadata: {
-            ...loggerContext.metadata,
-            internalErrorInfo: {
-                errorReason: err.stack || err.message
-            }
-        }
-    }
-}
-
-module.exports = { logger, processErrorMetadata };
+module.exports = loggerUtils;
