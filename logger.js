@@ -33,13 +33,21 @@ class logger {
         loggerUtils.error('', loggerObj);
     }
 
-    warn(trxType, trxResult, trxId, startTime, others) {
+    warn(trxType, trxResult, trxId, startTime, others, err) {
         let loggerObj = {
             trxType: this.isString(trxType),
             trxResult: this.isString(trxResult),
             trxId: this.isString(trxId),
             startTime: this.isDate(startTime),
-            others: this.isObject(others)
+            others: Object.keys(this.isObject(others)).length > 0 ? {
+                ...others,
+                metadata: {
+                    ...others.metadata,
+                    internalErrorInfo: {
+                        errorReason: err.stack || err.message
+                    }
+                }
+            } : {}
         }
 
         loggerUtils.warn('', loggerObj);
