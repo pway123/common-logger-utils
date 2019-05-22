@@ -53,7 +53,7 @@ function processLogFormat(type, trxType, trxResult, trxId, startTime, others, er
         } : {}
     }
 
-    if ((type === TYPE.ERROR || type === TYPE.WARN) && loggerObj.others.metadata) {
+    if ((type === TYPE.ERROR || type === TYPE.WARN) && loggerObj.others.metadata && err) {
         loggerObj.others.metadata.internalErrorInfo = { errorReason: err.stack || err.message }
     }
 
