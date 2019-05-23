@@ -45,12 +45,9 @@ function processLogFormat(type, trxType, trxResult, trxId, startTime, others, er
         others: Object.keys(isObject(others)).length > 0 ? {
             ...others,
             metadata: {
-                ...others.metadata,
-                // internalErrorInfo: {
-                //     errorReason: err.stack || err.message
-                // }
+                ...others.metadata
             }
-        } : {}
+        } : { metadata: {} }
     }
 
     if ((type === TYPE.ERROR || type === TYPE.WARN) && loggerObj.others.metadata && err) {
