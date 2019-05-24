@@ -1,11 +1,11 @@
 ## To use:
-- npm install git+https://github.com/pway123/common-logger-utils.git
+- npm install `git+https://github.com/pway123/common-logger-utils.git`
 
 ## Two methods for common usage:
 - logger.success
     - Logger success will print out info log.
 - logger.failure
-    -Logger failure will print out warn log.
+    - Logger failure will print out warn log.
 
 ## Mandatory parameters for logger
 1. logType
@@ -14,7 +14,7 @@
 4. startTime
 
 ## Logger generated will be in the following standard format:
-- [current_timestamp] [logLevel] [logType] [trxType] [trxResult] [trxId] [transaction_duration] [others] [metadata]
+[current_timestamp] [logLevel] [logType] [trxType] [trxResult] [trxId] [transaction_duration] [others] [metadata]
 
 - logLevel eg. TRANS, AUDIT
 - trxType = Function name where logger being executed
