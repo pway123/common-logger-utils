@@ -1,26 +1,15 @@
 const loggerUtils = require('./loggerUtils');
-const TYPE = {
-    INFO: 'info',
-    DEBUG: 'debug',
-    ERROR: 'error',
-    WARN: 'warn'
-}
+
+const TYPE = { INFO: 'info', WARN: 'warn' }
+const TRXRESULT = { SUCCESS: 'SUCCESS', FAILURE: 'FAILURE' };
 
 class logger {
-    error(trxType, trxResult, trxId, startTime, others, err) {
-        processLogFormat(TYPE.ERROR, trxType, trxResult, trxId, startTime, others, err);
+    static success(logType, trxType, trxId, startTime, others) {
+        processLogFormat(TYPE.INFO, logType, trxType, TRXRESULT.SUCCESS, trxId, startTime, others);
     }
 
-    warn(trxType, trxResult, trxId, startTime, others, err) {
-        processLogFormat(TYPE.ERROR, trxType, trxResult, trxId, startTime, others, err)
-    }
-
-    info(trxType, trxResult, trxId, startTime, others) {
-        processLogFormat(TYPE.INFO, trxType, trxResult, trxId, startTime, others);
-    }
-
-    debug(trxType, trxResult, trxId, startTime, others) {
-        processLogFormat(TYPE.DEBUG, trxType, trxResult, trxId, startTime, others);
+    static failure(logType, trxType, trxId, startTime, others, err) {
+        processLogFormat(TYPE.WARN, logType, trxType, TRXRESULT.FAILURE, trxId, startTime, others, err);
     }
 }
 
@@ -36,8 +25,9 @@ function isDate(date) {
     return Object.prototype.toString.call(date) === '[object Date]' ? date : undefined;
 }
 
-function processLogFormat(type, trxType, trxResult, trxId, startTime, others, err) {
+function processLogFormat(type, logType, trxType, trxResult, trxId, startTime, others, err) {
     let loggerObj = {
+        logType,
         trxType: isString(trxType),
         trxResult: isString(trxResult),
         trxId: isString(trxId),
@@ -45,30 +35,16 @@ function processLogFormat(type, trxType, trxResult, trxId, startTime, others, er
         others: Object.keys(isObject(others)).length > 0 ? {
             ...others,
             metadata: {
-                ...others.metadata,
-                // internalErrorInfo: {
-                //     errorReason: err.stack || err.message
-                // }
+                ...others.metadata
             }
-        } : {}
+        } : { metadata: {} }
     }
 
-    if ((type === TYPE.ERROR || type === TYPE.WARN) && loggerObj.others.metadata && err) {
+    if (type === TYPE.WARN && loggerObj.others.metadata && err) {
         loggerObj.others.metadata.internalErrorInfo = { errorReason: err.stack || err.message }
     }
 
-    if (type === TYPE.INFO) {
-        loggerUtils.info('', loggerObj);
-    }
-    else if (type === TYPE.DEBUG) {
-        loggerUtils.debug('', loggerObj);
-    }
-    else if (type === TYPE.WARN) {
-        loggerUtils.warn('', loggerObj);
-    }
-    else {
-        loggerUtils.error('', loggerObj);
-    }
+    loggerUtils[type]('', loggerObj);
 }
 
 module.exports = logger;
