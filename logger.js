@@ -3,7 +3,32 @@ const loggerUtils = require('./loggerUtils');
 const TYPE = { INFO: 'info', WARN: 'warn' }
 const TRXRESULT = { SUCCESS: 'SUCCESS', FAILURE: 'FAILURE' };
 
+let transactionId, startTime, logMetadata = {};
 class logger {
+    static get transactionId() {
+        return transactionId;
+    }
+
+    static set transactionId(input) {
+        transactionId = input;
+    }
+
+    static get startTime() {
+        return startTime;
+    }
+
+    static set startTime(input) {
+        startTime = input;
+    }
+
+    static get logMetadata() {
+        return logMetadata;
+    }
+
+    static set logMetadata(input) {
+        logMetadata = input;
+    }
+
     static success(logType, trxType, trxId, startTime, others) {
         processLogFormat(TYPE.INFO, logType, trxType, TRXRESULT.SUCCESS, trxId, startTime, others);
     }
