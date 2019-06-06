@@ -51,6 +51,9 @@ function customFormat(options) {
     let logs = `[${timestamp}] [${logLevel}] [${meta.logType}] [${meta.trxType}] [${meta.trxResult}] [${meta.trxId}] [${calculateTransactionDuration(meta.startTime)}]`;
 
     for (var property in meta) {
+        if (property === 'pnMetrics') {
+            logs += `[${meta['pnMetrics'].totalCount}] [${meta['pnMetrics'].ios}] [${meta['pnMetrics'].android}]`
+        }
         if (property === 'others') {
             let valueInOthers = meta[property];
 
