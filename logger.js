@@ -29,12 +29,12 @@ class logger {
         logMetadata = input;
     }
 
-    static success(logType, trxType, trxId, startTime, others, pnMetrics) {
-        processLogFormat(TYPE.INFO, logType, trxType, TRXRESULT.SUCCESS, trxId, startTime, others, pnMetrics);
+    static success(logType, trxType, trxId, startTime, others) {
+        processLogFormat(TYPE.INFO, logType, trxType, TRXRESULT.SUCCESS, trxId, startTime, others);
     }
 
-    static failure(logType, trxType, trxId, startTime, others, pnMetrics, err) {
-        processLogFormat(TYPE.WARN, logType, trxType, TRXRESULT.FAILURE, trxId, startTime, others, pnMetrics, err);
+    static failure(logType, trxType, trxId, startTime, others, err) {
+        processLogFormat(TYPE.WARN, logType, trxType, TRXRESULT.FAILURE, trxId, startTime, others, err);
     }
 }
 
@@ -50,14 +50,13 @@ function isDate(date) {
     return Object.prototype.toString.call(date) === '[object Date]' ? date : undefined;
 }
 
-function processLogFormat(type, logType, trxType, trxResult, trxId, startTime, others, pnMetrics, err) {
+function processLogFormat(type, logType, trxType, trxResult, trxId, startTime, others, err) {
     let loggerObj = {
         logType,
         trxType: isString(trxType),
         trxResult: isString(trxResult),
         trxId: isString(trxId),
         startTime: isDate(startTime),
-        pnMetrics: pnMetrics === null ? {} : pnMetrics,
         others: Object.keys(isObject(others)).length > 0 ? {
             ...others,
             metadata: {

@@ -14,7 +14,7 @@
 4. startTime
 
 ## Logger generated will be in the following standard format:
-[current_timestamp] [logLevel] [logType] [trxType] [trxResult] [trxId] [transaction_duration] [others] [pnMetrics] [metadata]
+[current_timestamp] [logLevel] [logType] [trxType] [trxResult] [trxId] [transaction_duration] [others] [metadata]
 
 - logLevel eg. TRANS, AUDIT
 - trxType = Function name where logger being executed
@@ -22,5 +22,4 @@
 - trxId = UUID 
 - transaction_duration = the total processing time (current time - start time)
 - others = extra informations generate in [] before metadata
-- pnMetrics = extra information needed for Cloudwatch dashboard for Push Notifications. If not needed, just put null.
 - metadata = Contain metadata/err

@@ -51,9 +51,6 @@ function customFormat(options) {
     let logs = `[${timestamp}] [${logLevel}] [${meta.logType}] [${meta.trxType}] [${meta.trxResult}] [${meta.trxId}] [${calculateTransactionDuration(meta.startTime)}]`;
 
     for (var property in meta) {
-        if (property === 'pnMetrics' && Object.keys(meta['pnMetrics']).length > 0) {
-            logs += ` [${meta['pnMetrics'].successIosCount}] [${meta['pnMetrics'].successAndroidCount}] [${meta['pnMetrics'].failureIosCount}] [${meta['pnMetrics'].failureAndroidCount}]`
-        }
         if (property === 'others') {
             let valueInOthers = meta[property];
 
