@@ -57,7 +57,7 @@ function processLogFormat(type, logType, trxType, trxResult, trxId, startTime, o
         trxResult: isString(trxResult),
         trxId: isString(trxId),
         startTime: isDate(startTime),
-        pnMetrics: isObject(pnMetrics),
+        pnMetrics: pnMetrics === null ? {} : pnMetrics,
         others: Object.keys(isObject(others)).length > 0 ? {
             ...others,
             metadata: {
