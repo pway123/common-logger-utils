@@ -52,7 +52,7 @@ function customFormat(options) {
 
     for (var property in meta) {
         if (property === 'pnMetrics') {
-            logs += `[${meta['pnMetrics'].totalCount}] [${meta['pnMetrics'].ios}] [${meta['pnMetrics'].android}]`
+            logs += `[${meta['pnMetrics'].successIosCount}] [${meta['pnMetrics'].successAndroidCount}] ${meta['pnMetrics'].failureIosCount}] [${meta['pnMetrics'].failureAndroidCount}]`
         }
         if (property === 'others') {
             let valueInOthers = meta[property];
