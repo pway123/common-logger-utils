@@ -36,6 +36,11 @@ class logger {
     static failure(logType, trxType, trxId, startTime, others, err) {
         processLogFormat(TYPE.WARN, logType, trxType, TRXRESULT.FAILURE, trxId, startTime, others, err);
     }
+
+    static info(logType, trxType, trxId, state, startTime, others) {
+        processLogFormat(TYPE.INFO, logType, trxType, state, trxId, startTime, others);
+    }
+
 }
 
 function isObject(data) {
