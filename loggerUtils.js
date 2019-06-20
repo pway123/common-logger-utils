@@ -48,7 +48,7 @@ function customFormat(options) {
 
     // let msgObj = options.message ? JSON.parse(options.message) : '';
     let meta = options.meta;
-    let logs = `[${timestamp}] [${logLevel}] [${meta.logType}] [${meta.trxType}] [${meta.trxResult}] [${meta.trxId}] [${calculateTransactionDuration(meta.startTime)}]`;
+    let logs = `[${timestamp}] [${logLevel}] [${meta.logType}] [${meta.trxType}] [${meta.trxResult}] [${meta.sessionId}] [${meta.trxId}] [${calculateTransactionDuration(meta.startTime)}]`;
 
     for (var property in meta) {
         if (property === 'others') {

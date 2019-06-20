@@ -3,14 +3,30 @@ const loggerUtils = require('./loggerUtils');
 const TYPE = { INFO: 'info', WARN: 'warn' }
 const TRXRESULT = { SUCCESS: 'SUCCESS', FAILURE: 'FAILURE' };
 
-let transactionId, startTime, logMetadata = {};
+let sessionId, trxId, startTime, logMetadata = {};
 class logger {
+    static get sessionId() {
+        return sessionId;
+    }
+
+    static set sessionId(input) {
+        sessionId = input;
+    }
+
+    static get sessionId() {
+        return sessionId;
+    }
+
+    static set sessionId(input) {
+        sessionId = input;
+    }
+
     static get transactionId() {
-        return transactionId;
+        return trxId;
     }
 
     static set transactionId(input) {
-        transactionId = input;
+        trxId = input;
     }
 
     static get startTime() {
@@ -29,18 +45,17 @@ class logger {
         logMetadata = input;
     }
 
-    static success(logType, trxType, trxId, startTime, others) {
-        processLogFormat(TYPE.INFO, logType, trxType, TRXRESULT.SUCCESS, trxId, startTime, others);
+    static success(logType, trxType, others) {
+        processLogFormat(TYPE.INFO, logType, trxType, TRXRESULT.SUCCESS, sessionId, trxId, startTime, others);
     }
 
-    static failure(logType, trxType, trxId, startTime, others, err) {
-        processLogFormat(TYPE.WARN, logType, trxType, TRXRESULT.FAILURE, trxId, startTime, others, err);
+    static failure(logType, trxType, others, err) {
+        processLogFormat(TYPE.WARN, logType, trxType, TRXRESULT.FAILURE, sessionId, trxId, startTime, others, err);
     }
 
-    static info(logType, trxType, trxId, state, startTime, others) {
-        processLogFormat(TYPE.INFO, logType, trxType, state, trxId, startTime, others);
+    static audit(logType, trxType, state, others) {
+        processLogFormat(TYPE.INFO, logType, trxType, state, sessionId, trxId, startTime, others);
     }
-
 }
 
 function isObject(data) {
@@ -55,11 +70,12 @@ function isDate(date) {
     return Object.prototype.toString.call(date) === '[object Date]' ? date : undefined;
 }
 
-function processLogFormat(type, logType, trxType, trxResult, trxId, startTime, others, err) {
+function processLogFormat(type, logType, trxType, trxResult, sessionId, trxId, startTime, others, err) {
     let loggerObj = {
         logType,
         trxType: isString(trxType),
         trxResult: isString(trxResult),
+        sessionId: isString(sessionId),
         trxId: isString(trxId),
         startTime: isDate(startTime),
         others: Object.keys(isObject(others)).length > 0 ? {

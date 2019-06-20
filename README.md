@@ -16,9 +16,10 @@
 ## Logger generated will be in the following standard format:
 [current_timestamp] [logLevel] [logType] [trxType] [trxResult] [trxId] [transaction_duration] [others] [metadata]
 
-- logLevel eg. TRANS, AUDIT
-- trxType = Function name where logger being executed
+- logType eg. TRANS, AUDIT
+- trxType = "Service:Function name" where logger being executed
 - trxResult (SUCCESS/FAILURE) depends on which logger function being called
+- sessionId
 - trxId = UUID 
 - transaction_duration = the total processing time (current time - start time)
 - others = extra informations generate in [] before metadata
