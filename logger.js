@@ -13,14 +13,6 @@ class logger {
         sessionId = input;
     }
 
-    static get sessionId() {
-        return sessionId;
-    }
-
-    static set sessionId(input) {
-        sessionId = input;
-    }
-
     static get transactionId() {
         return trxId;
     }
