@@ -1,7 +1,7 @@
 ## To use:
 - npm install `git+https://github.com/pway123/common-logger-utils.git`
 
-## Two methods for common usage:
+## Three methods for common usage:
 - logger.success
     - Logger success will print out info log with default success state.
 - logger.failure
@@ -24,7 +24,7 @@
 - logLevel eg. INFO, WARN
 - (*) logType eg. TRANS, AUDIT
 - (*) trxType = "Service:Function name" where logger being executed
-- trxResult (SUCCESS/FAILURE) depends on which logger function being called
+- trxResult (SUCCESS/FAILURE/custom state) depends on which logger method used
 - (*) sessionId
 - (*) trxId = UUID 
 - (*) transaction_duration = the total processing time (current time - start time). Will returned as 0 when start time is not provided.
