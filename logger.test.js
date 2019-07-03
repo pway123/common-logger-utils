@@ -2,10 +2,11 @@ const logger = require('./logger');
 
 describe('logging', () => {
     test('testing', () => {
+        logger.transactionId = 'transactionId';
+        logger.sessionId = 'sessionId';
         let loggerObj = {
             logType: 'TRANS',
             trxType: 'INDEX_HANDLER',
-            trxId: '12345',
             startTime: new Date(),
             others: {
                 key1: 'key1',
@@ -19,11 +20,10 @@ describe('logging', () => {
         }
 
         try {
-            // salahhh();
-            logger.transactionId = '1234';
-            logger.success(loggerObj.logType, loggerObj.trxType, logger.transactionId, loggerObj.startTime, loggerObj.others);
+            // testFailure();
+            logger.success(loggerObj.logType, loggerObj.trxType, loggerObj.others);
         } catch (err) {
-            logger.failure(loggerObj.logType, loggerObj.trxType, loggerObj.trxId, loggerObj.startTime, loggerObj.others, err);
+            logger.failure(loggerObj.logType, loggerObj.trxType, loggerObj.others, err);
         }
     })
 });
